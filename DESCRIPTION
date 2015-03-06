@@ -1,0 +1,17 @@
+Package: SingleAnnotationChooser
+Type: Package
+Title: Chooses single annotation from multiple alternatives.
+Version: 1.0
+Date: 2015-02-10
+Author: Pablo Moreno
+Maintainer: Pablo Moreno <pcm32@github.com>
+Description: Retrieves and keep annotation for bubble plot problem. Produces LP
+    representation.
+License: LGPL-2
+Depends:
+    data.table,
+    biomaRt,
+    GO.db
+Collate:
+    'AnnotationList.R'
+    'GOAnnotationList.R'
