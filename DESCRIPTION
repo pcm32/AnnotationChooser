@@ -11,7 +11,9 @@ License: LGPL-2
 Depends:
     data.table,
     biomaRt,
-    GO.db
+    GO.db,
+    Matrix
 Collate:
     'AnnotationList.R'
     'GOAnnotationList.R'
+    'gurobi.R'

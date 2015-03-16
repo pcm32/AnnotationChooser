@@ -1,3 +1,18 @@
+#' Produce Gurobi Model
+#' 
+#' Produces a formatted gurobi model based on the annotation list object given and 
+#' the additional parameters that control the problem definition.
+#' 
+#' @param annotationList An AnnotationList object, from where the annotation matrix and
+#' dimensions are obtained.
+#' @param maxAnnotationTerms An integer with the maximum numbers of terms that should be used
+#' for the overall annotation. Defaults to 20.
+#' @param minDistanceFromRoot An integer with the minimum distance that terms need to have from
+#' the root of the ontology to be eligible. Defaults to 3.
+#' 
+#' @return the gurobi model, ready to be obtimized using gurobi(). It is a list containing
+#' the A matrix, the objective function, the b vector, the senses vector, the right hand side,
+#' the nature of the variables and the type (maximization.)
 produceGurobiModel<-function(annotationList,maxAnnotationTerms=20,minDistanceFromRoot=3) {
   annotMatrix<-annotationMatrix(annotationList)
   geneAmount<-nrow(annotMatrix)
@@ -241,6 +256,18 @@ produceGurobiModel<-function(annotationList,maxAnnotationTerms=20,minDistanceFro
   return(model)
 }
 
+#' Obtain annotated solution
+#' 
+#' Produces an annotated version of the optimal within the gurobi result given (the result of calling gurobi()).
+#' The annotation is extracted from the annotation list object.
+#' 
+#' @param gurobiRes The result of invoking gurobi() with the model produced by \code{produceGurobiModel}.
+#' @param annotationList The same AnnotationList object provided to \code{produceGurobiModel}.
+#' 
+#' @return a list containing \code{resMat}, which contains the result matrix (Terms as rows, Proteins as Columns, 
+#' a 1 in i,j means Term i is annotation Protein j), and \code{coverage}, which contains a summary per Term of 
+#' the maximum depth of the term and the number of proteins it is annotating (the coverage).
+#' 
 obtainAnnotatedSolution<-function(gurobiRes,annotationList) {
   annotMatrix<-annotationMatrix(annotationList)
   geneAmount<-nrow(annotMatrix)
